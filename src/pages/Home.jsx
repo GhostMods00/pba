@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
@@ -10,10 +10,15 @@ import {
   Users2,
   ShieldCheck,
   BarChart4,
-  TrendingUp
+  TrendingUp,
+  Check
 } from 'lucide-react';
+import Modal from '../components/Modal';
 
 const Home = () => {
+  const [isGetStartedModalOpen, setIsGetStartedModalOpen] = useState(false);
+  const [isLearnMoreModalOpen, setIsLearnMoreModalOpen] = useState(false);
+
   const services = [
     {
       icon: Calculator,
@@ -64,11 +69,17 @@ const Home = () => {
               your business needs. Let us handle the numbers while you focus on growth.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <button className="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center">
+              <button 
+                onClick={() => setIsGetStartedModalOpen(true)}
+                className="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center"
+              >
                 Get Started
                 <ArrowRight className="ml-2 w-5 h-5" />
               </button>
-              <button className="w-full sm:w-auto border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-black transition duration-300">
+              <button 
+                onClick={() => setIsLearnMoreModalOpen(true)}
+                className="w-full sm:w-auto border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-black transition duration-300"
+              >
                 Learn More
               </button>
             </div>
@@ -175,12 +186,133 @@ const Home = () => {
           <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">
             Let us help you streamline your operations and achieve your financial goals
           </p>
-          <button className="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center mx-auto">
+          <button 
+            className="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center mx-auto"
+            onClick={() => setIsGetStartedModalOpen(true)}
+          >
             Contact Us Today
             <ArrowRight className="ml-2 w-5 h-5" />
           </button>
         </div>
       </section>
+      
+      {/* Modals */}
+      <Modal 
+        isOpen={isGetStartedModalOpen} 
+        onClose={() => setIsGetStartedModalOpen(false)}
+        title="Get Started with Prime Balance Advisory"
+      >
+        <div className="space-y-6">
+          <p className="text-gray-600">
+            Thank you for your interest in Prime Balance Advisory. We're excited to help you achieve your financial goals. Please fill out the form below to get started.
+          </p>
+          
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input type="text" id="name" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input type="email" id="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <input type="tel" id="phone" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Services Needed</label>
+              <select id="service" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <option value="">Select a service</option>
+                <option value="bookkeeping">Bookkeeping</option>
+                <option value="tax">Tax Services</option>
+                <option value="payroll">Payroll Management</option>
+                <option value="advisory">Business Advisory</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+              <textarea id="message" rows="3" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+            </div>
+            <button 
+              type="button" 
+              className="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition duration-300"
+              onClick={() => {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service').value;
+                const message = document.getElementById('message').value;
+                
+                const subject = "New Inquiry from Prime Balance Advisory Website";
+                const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AService: ${service}%0D%0A%0D%0AMessage:%0D%0A${message}%0D%0A%0D%0A`;
+                
+                window.location.href = `mailto:pbaadvisory@gmail.com?subject=${subject}&body=${body}`;
+              }}
+            >
+              Send Us Email
+            </button>
+          </form>
+        </div>
+      </Modal>
+      
+      <Modal 
+        isOpen={isLearnMoreModalOpen} 
+        onClose={() => setIsLearnMoreModalOpen(false)}
+        title="Why Choose Prime Balance Advisory"
+      >
+        <div className="space-y-6">
+          <div className="flex items-start space-x-3">
+            <div className="bg-black rounded-full p-1 flex-shrink-0">
+              <Check className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg">International Expertise</h4>
+              <p className="text-gray-600">Benefit from Leticia's experience at Ernst & Young and other major accounting firms in Brazil, bringing a global perspective to your finances.</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3">
+            <div className="bg-black rounded-full p-1 flex-shrink-0">
+              <Check className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg">Personalized Service</h4>
+              <p className="text-gray-600">We take the time to understand your unique business needs and create customized solutions that align with your goals.</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3">
+            <div className="bg-black rounded-full p-1 flex-shrink-0">
+              <Check className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg">Comprehensive Solutions</h4>
+              <p className="text-gray-600">From bookkeeping and tax preparation to payroll management and business advisory, we provide end-to-end financial services.</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3">
+            <div className="bg-black rounded-full p-1 flex-shrink-0">
+              <Check className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg">Modern Approach</h4>
+              <p className="text-gray-600">We leverage the latest accounting technologies like Xero, MYOB, and SAP to streamline processes and enhance accuracy.</p>
+            </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <Link 
+              to="/about"
+              className="inline-block bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition duration-300"
+              onClick={() => setIsLearnMoreModalOpen(false)}
+            >
+              Read Our Full Story
+            </Link>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
