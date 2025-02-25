@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight,
@@ -90,6 +91,38 @@ const Home = () => {
               className="h-60 md:h-72 w-auto object-contain"
             />
           </motion.div>
+
+          {/* Founder Introduction */}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Meet Your Accountant</h2>
+              <p className="text-gray-600 mb-4">
+                With over a decade of experience in accounting and auditing, Leticia brings international expertise from her work at Ernst & Young and Baker Tilly in Brazil to serve businesses across Australia.
+              </p>
+              <p className="text-gray-600 mb-4">
+                Passionate about helping businesses improve their operations, Leticia offers comprehensive financial solutions tailored to each client's unique needs.
+              </p>
+              <Link to="/about" className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center text-sm font-medium w-fit">
+                Learn More About Leticia
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
+              <img 
+                src="/assets/images/Leticia.jpeg" 
+                alt="Leticia - Founder" 
+                className="rounded-lg shadow-xl object-cover w-full max-w-md mx-auto"
+              />
+            </motion.div>
+          </div>
 
           {/* Stats Section */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
