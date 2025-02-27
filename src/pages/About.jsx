@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Users, Trophy, TrendingUp, GraduationCap, Briefcase, Award, Globe, Building, FileText } from 'lucide-react';
 
@@ -71,7 +72,7 @@ const About = () => {
       icon: GraduationCap
     },
     {
-      year: "2020-Present",
+      year: "2025-Present",
       achievement: "Founded Prime Balance Advisory",
       icon: Award
     }
@@ -164,39 +165,62 @@ const About = () => {
         </div>
       </section>
 
-      {/* Professional Journey Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Professional Journey</h2>
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200"></div>
-            
-            <div className="space-y-12">
-              {professionalJourney.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
-                  <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:pl-8'}`}>
-                    <h3 className="text-xl font-bold text-black">{item.year}</h3>
-                    <p className="text-gray-600">{item.achievement}</p>
-                  </div>
-                  <div className="z-10 flex-shrink-0">
-                    <div className="bg-black p-3 rounded-full">
-                      <item.icon className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                  <div className="md:w-1/2"></div>
-                </motion.div>
-              ))}
+{/* Professional Journey Section - Improved Mobile Friendly Timeline */}
+<section className="py-16 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-12">Professional Journey</h2>
+    
+    <div className="relative">
+      {/* Timeline line - hidden on mobile, visible on desktop */}
+      <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200"></div>
+      
+      <div className="space-y-12">
+        {professionalJourney.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
+            className="flex flex-col md:flex-row items-center"
+          >
+            {/* For desktop: Left content or empty space */}
+            <div className={`hidden md:block md:w-1/2 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:order-3 md:pl-8 md:text-left'}`}>
+              {index % 2 === 0 ? (
+                <>
+                  <h3 className="text-xl font-bold text-black">{item.year}</h3>
+                  <p className="text-gray-600">{item.achievement}</p>
+                </>
+              ) : null}
             </div>
-          </div>
-        </div>
-      </section>
+            
+            {/* Center icon - always visible */}
+            <div className={`z-10 flex-shrink-0 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+              <div className="bg-black p-3 rounded-full">
+                <item.icon className="w-6 h-6 text-white" />
+              </div>
+            </div>
+            
+            {/* For desktop: Right content or empty space */}
+            <div className={`hidden md:block md:w-1/2 ${index % 2 === 1 ? 'md:text-left md:pl-8 md:order-1' : 'md:order-3'}`}>
+              {index % 2 === 1 ? (
+                <>
+                  <h3 className="text-xl font-bold text-black">{item.year}</h3>
+                  <p className="text-gray-600">{item.achievement}</p>
+                </>
+              ) : null}
+            </div>
+            
+            {/* Mobile only content - hidden on desktop */}
+            <div className="md:hidden text-center mt-4">
+              <h3 className="text-xl font-bold text-black">{item.year}</h3>
+              <p className="text-gray-600">{item.achievement}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* International Experience Section */}
       <section className="py-16 bg-white">
@@ -311,7 +335,7 @@ const About = () => {
               className="relative"
             >
               <img 
-                src="/api/placeholder/600/400" 
+                src="/assets/images/Services.jpg" 
                 alt="Accounting Services" 
                 className="rounded-lg shadow-xl"
               />
@@ -404,18 +428,18 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Let us help you streamline your business operations and focus on what matters most - growing your business.
-          </p>
-          <button className="bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300">
-            Contact Us Today
-          </button>
-        </div>
-      </section>
+     {/* CTA Section */}
+<section className="py-16 bg-black text-white">
+  <div className="max-w-7xl mx-auto px-4 text-center">
+    <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+    <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+      Let us help you streamline your business operations and focus on what matters most - growing your business.
+    </p>
+    <Link to="/contact" className="bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 inline-block">
+      Contact Us Today
+    </Link>
+  </div>
+</section>
     </div>
   );
 };

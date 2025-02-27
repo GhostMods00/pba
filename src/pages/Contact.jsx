@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 const Contact = () => {
-  const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success
+  const [formStatus, setFormStatus] = useState('idle'); // idle, sending, sent
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,28 +19,45 @@ const Contact = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormStatus('submitting');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-    }, 1500);
-  };
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    // Prepare email content
+    const subject = encodeURIComponent(`Contact Form: ${formData.subject || 'New Inquiry'}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone: ${formData.phone || 'Not provided'}\n\n` +
+      `Message:\n${formData.message}\n`
+    );
+    
+    // Open email client
+    window.location.href = `mailto:pbaadvisory@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Set status to sent after a brief delay
+    setTimeout(() => {
+      setFormStatus('sent');
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setFormStatus('idle');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      }, 3000);
+    }, 1000);
   };
 
   const contactInfo = [
@@ -64,7 +81,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Location",
-      content: "Melbourne, VIC"
+      content: "Queensland, QLD"
     }
   ];
 
@@ -183,17 +200,17 @@ const Contact = () => {
               </div>
               <button
                 type="submit"
-                disabled={formStatus === 'submitting'}
+                disabled={formStatus !== 'idle'}
                 className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center justify-center"
               >
-                {formStatus === 'submitting' ? (
+                {formStatus === 'sending' ? (
                   <span className="flex items-center">
-                    Sending...
+                    Opening Email Client...
                   </span>
-                ) : formStatus === 'success' ? (
+                ) : formStatus === 'sent' ? (
                   <span className="flex items-center">
                     <CheckCircle className="w-5 h-5 mr-2" />
-                    Message Sent
+                    Email Ready to Send
                   </span>
                 ) : (
                   <span className="flex items-center">
@@ -203,15 +220,6 @@ const Contact = () => {
                 )}
               </button>
             </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-            <p className="text-gray-600">Map placeholder - Add Google Maps integration here</p>
           </div>
         </div>
       </section>

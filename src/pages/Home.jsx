@@ -153,6 +153,56 @@ const Home = () => {
           </div>
         </div>
       </section>
+      {/* Visual Appeal Section */}
+<section className="py-20 bg-white-50">
+  <div className="max-w-7xl mx-auto px-4">
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+        className="relative"
+      >
+        <img 
+          src="/assets/images/financial-success.jpg" 
+          alt="Financial Success" 
+          className="rounded-lg shadow-xl object-cover w-full max-h-96"
+        />
+        <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
+          <img 
+            src="/assets/images/pba-logo.png" 
+            alt="Prime Balance Advisory" 
+            className="h-16 w-auto"
+          />
+        </div>
+      </motion.div>
+      
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="space-y-6"
+      >
+        <h2 className="text-3xl font-bold leading-tight">We Handle the Numbers <br />So You Can Focus on Growth</h2>
+        <p className="text-gray-600">
+          At Prime Balance Advisory, we believe that financial clarity leads to better business decisions. 
+          Our comprehensive accounting solutions provide the foundation you need to confidently move your business forward.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <span className="bg-black text-white px-4 py-1 rounded-full text-sm">Accurate</span>
+          <span className="bg-black text-white px-4 py-1 rounded-full text-sm">Reliable</span>
+          <span className="bg-black text-white px-4 py-1 rounded-full text-sm">Professional</span>
+          <span className="bg-black text-white px-4 py-1 rounded-full text-sm">Personalized</span>
+        </div>
+        <p className="text-gray-600 italic">
+          "Our success is measured by your financial well-being."
+        </p>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* Services Section */}
       <section className="py-12 md:py-20 bg-gray-50">
@@ -178,6 +228,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      
 
       {/* CTA Section */}
       <section className="py-12 md:py-20 bg-black text-white">

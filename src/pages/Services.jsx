@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Calculator, 
@@ -160,17 +161,17 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Need a Customized Solution?</h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Contact us to discuss how we can tailor our services to meet your specific business needs
-          </p>
-          <button className="bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300">
-            Get in Touch
-          </button>
-        </div>
-      </section>
+<section className="py-16 bg-black text-white">
+  <div className="max-w-7xl mx-auto px-4 text-center">
+    <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+    <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+      Let us help you streamline your business operations and focus on what matters most - growing your business.
+    </p>
+    <Link to="/contact" className="bg-white text-black px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 inline-block">
+      Contact Us Today
+    </Link>
+  </div>
+</section>
     </div>
   );
 };
